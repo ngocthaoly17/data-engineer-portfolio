@@ -1,0 +1,64 @@
+﻿question;expected_answer;generated_answer;semantic_similarity;faithfulness;retrieved_documents
+Je cherche un concert à Versailles;Le système doit recommander un ou plusieurs événements musicaux présents dans les données.;"Voici les concerts à Versailles selon le contexte fourni :
+
+- **Jazz à la ferme - Le Versailles Jazz Festival fait sa rentrée en musique**
+  *Samedi 19 septembre, 16h30* – Jazz à la ferme Nature & Découvertes.
+
+- **Julien Clerc - Une vie**
+  *Samedi 10 octobre, 20h30* – Concert.
+
+- **Les Gloops en concert !**
+  *19 - 22 octobre* – Tourbillon musical joyeux et fantaisiste.
+
+- **En ! Duos conspicis (Conspiration à deux voix)**
+  *Lundi 7 septembre, 18h30* – Récital de musique baroque (XVIIe-XVIIIe siècles).";0.7833958897833907;1.0;Jazz à la ferme - Le Versailles Jazz Festival fait sa rentrée en musique | Julien Clerc - Une vie | Les Gloops en concert ! | En ! Duos conspicis (Conspiration à deux voix)
+Quels événements pour enfants sont disponibles ?;Le système doit proposer des activités destinées aux enfants ou aux familles.;"Voici les événements pour enfants disponibles à Versailles selon le contexte fourni :
+
+1. **Bébés lecteurs** – Jeudi 24 septembre, 09h30 et 10h15 : Moment convivial entre professionnels du livre, bébés et familles.
+2. **Vous avez dit kami ?** – Samedi 26 septembre, 11h00 : Lectures animées dans un petit théâtre de bois japonais pour les 4-9 ans.
+3. **Soirée jeux** – Samedi 26 septembre, 19h30 : Soirée ludique avec des jeux de société dès 8 ans (à la Ludothèque).";0.8227505974332429;1.0;Bébés lecteurs | Grands jeux en accès libre | Vous avez dit kami ? | Soirée jeux
+Y a-t-il des expositions actuellement à Versailles ?;Le système doit lister les expositions en cours ou à venir.;"Oui, il y a actuellement des expositions à Versailles :
+
+- **Jardins des Lumières 1750-1800** (5 mai - 27 septembre)
+- **Visite-dégustation Art & Vin** (27 mars - 25 septembre, certains vendredis)
+- **Journées Européennes du Patrimoine ~ Visites insolites** (19 et 20 septembre)";0.8224101609776762;1.0;Jardins des Lumières 1750-1800 | Visite-dégustation Art & Vin | Langage, tout type d'expression | Journées Européennes du Patrimoine ~ Visites insolites
+Je cherche une activité culturelle gratuite;Le système doit proposer des événements gratuits lorsqu'ils sont disponibles.;"**Grands jeux en accès libre**
+*Ville : Versailles*
+*Dates : 19 - 30 août*
+*Description : Des grands jeux en bois attendent petits et grands dans le jardin du musée.*";0.7857419843192274;1.0;Une histoire culturelle de la fête | Belle bourrine - Elise Giuliani | Grands jeux en accès libre | On se foutrait pas un peu de notre gueule ? - Thierry Marquet
+Quels événements sont prévus ce week-end ?;Le système doit présenter les événements programmés le week-end.;"Ce week-end (24-26 septembre), les événements prévus à Versailles sont :
+
+- **""Le gang des chieuses""** (24-26 septembre)
+- **""Soirée jeux""** (Samedi 26 septembre, 19h30)";0.8208881320459963;0.0;Questions d'actualité | Le gang des chieuses | Soirée jeux | Journées européennes du patrimoine : sur les traces des 250 ans de l'Indépendance américaine.
+Je suis intéressé par le théâtre;Le système doit recommander des spectacles de théâtre ou des représentations scéniques.;"Voici les événements liés au théâtre à Versailles selon le contexte fourni :
+
+- **""L'École des femmes""** (23 septembre - 3 octobre) : Une pièce du XVIIe siècle avec une mise en scène moderne, mettant en avant son humanité et son esprit critique.
+- **""Guignol""** (6 - 20 septembre, les dimanches) : Spectacle tout public dès 3 ans.
+
+Si vous cherchez d'autres types de spectacles (humour, conférences, etc.), voici d'autres options :
+- **""Arnaud Tsamère""** (17 octobre, 20h30) : Nouveau spectacle.
+- **""Les jeudis de la bibliothèque""** (24 septembre, 18h00) : Conférence sur Beaumarchais et l'Amérique.";0.841201803717635;1.0;Arnaud Tsamère | Guignol | Les jeudis de la bibliothèque | L'École des femmmes
+Quels événements liés à la musique classique sont proposés ?;Le système doit présenter les concerts ou événements de musique classique.;"Les événements liés à la musique classique proposés sont :
+
+- **""Ombres et Lumières""** (Dimanche 11 octobre, 17h00) : Dvořák - Trio n°4 en mi mineur op. 90 « Dumky » et Schubert - Trio n°1 en si bémol majeur op. 99 D.898.";0.8501656676159008;1.0;Ombres et Lumières | Une histoire culturelle de la fête | La Voie de l'écuyère - Opus 2026 | Jazz à la ferme - Le Versailles Jazz Festival fait sa rentrée en musique
+Je cherche une activité pour un adolescent;Le système doit recommander des ateliers, spectacles ou activités adaptés aux adolescents.;Atelier de mathématiques récréatives (Mercredi 23 septembre, 14h00);0.7224684730649386;0.0;"Makey Makey | Atelier de mathématiques récréatives | Après-midi ""Découverte des arts du cirque au musée Lambinet"" 7-12 ans | Grands jeux en accès libre"
+Y a-t-il des conférences à Versailles ?;Le système doit présenter les conférences, colloques ou rencontres présents dans les données.;"Oui, il y a des conférences à Versailles, comme en témoignent les titres et descriptions fournis dans le contexte. Voici quelques exemples :
+
+- **""Questions d'actualité""** (Vendredi 9 octobre, 14h30) : *""Pourquoi et comment la guerre n'aura pas lieu ?""*
+- **""L'histoire en questions""** (Mercredi 7 octobre, 16h30) : *""Depuis quand sait-on que la terre est ronde ?""*
+- **""Les conflits du passé et de l'avenir""** (Lundi 5 octobre, 14h30) : *""Le soutien populaire à la guerre.""*
+
+D'autres événements comme un **atelier de mathématiques récréatives** (Mercredi 23 septembre) sont également mentionnés.";0.8413045620781979;1.0;Questions d'actualité | L'histoire en questions | Les conflits du passé et de l'avenir | Atelier de mathématiques récréatives
+Quels événements culturels sont prévus en juillet ?;Le système doit lister les événements dont les dates se situent en juillet.;"En juillet, les événements culturels prévus à Versailles sont :
+
+1. **Parcours France – Amérique, de la Renaissance à l’Indépendance américaine**
+   - **Date** : 4 juillet - 26 septembre
+   - **Lieu** : Galerie des Affaires étrangères
+
+2. **Cactus Art Festival**
+   - **Date** : 27 juillet - 2 août
+   - **Description** : Plateforme mêlant exposition d’art contemporain, éducation artistique et participation du public
+
+3. **Stages de cirque au chapiteau Méli Mélo pendant les vacances d'été**
+   - **Date** : 6 juillet - 30 août
+   - **Description** : Découverte du cirque (jonglage, équilibre, aériens, acrobaties)";0.8273516962426248;0.8;Parcours France – Amérique, de la Renaissance à l’Indépendance américaine | Une histoire culturelle de la fête | Cactus Art Festival | Stages de cirque au chapiteau Méli Mélo pendant les vacances d'été

@@ -1,0 +1,32 @@
+# Spark
+checkpoints/
+**/checkpoints/
+spark-warehouse/
+**/spark-warehouse/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Environnements / secrets
+.env
+.env.*
+*.key
+*.pem
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+# Fichiers volumineux
+
+# Fichiers volumineux
+NL_P11_concevez-et-deployez-un-systeme-rag_2026-07-28T190939.zip

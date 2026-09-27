@@ -1,0 +1,46 @@
+[tool.poetry]
+name = "data-analysis-project"
+version = "0.1.0"
+description = "Un projet pour l'analyse de données, la visualisation et le traitement"
+authors = ["Votre Nom <votre.email@example.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"  # Vous pouvez ajuster la version de Python selon vos besoins
+
+# Librairies nécessaires pour l'analyse de données
+pandas = "^1.3"
+numpy = "^1.21"
+matplotlib = "^3.4"
+seaborn = "^0.11"
+scipy = "^1.7"
+scikit-learn = "^0.24"
+
+# Librairies pour le nettoyage et la manipulation des données
+openpyxl = "^3.0"  # Si vous travaillez avec des fichiers Excel
+xlrd = "^2.0"  # Librairie nécessaire pour lire certains formats Excel
+sqlalchemy = "^1.4"  # Pour la connexion et la manipulation de bases de données SQL
+
+# Librairies pour la gestion des pipelines de données et les transformations
+pyarrow = "^4.0"
+dask = "^2021.3"  # Pour traiter des données en parallèle (utile pour de gros volumes de données)
+dbt = "^0.21"  # Si vous utilisez dbt pour gérer vos modèles SQL
+
+# Librairies pour le machine learning et l'analyse statistique
+statsmodels = "^0.12"
+tensorflow = "^2.5"  # Pour les analyses de données plus avancées ou les réseaux neuronaux
+
+# Librairies supplémentaires pour des analyses avancées ou spécifiques
+plotly = "^5.0"  # Pour des visualisations interactives
+bokeh = "^2.3"  # Une autre bibliothèque pour les visualisations interactives
+jupyter = "^1.0"  # Pour un environnement de développement interactif
+
+[tool.poetry.dev-dependencies]
+# Librairies de développement
+pytest = "^6.2"  # Pour les tests unitaires
+black = "^21.9b0"  # Pour formater le code automatiquement
+isort = "^5.9"  # Pour trier les imports
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

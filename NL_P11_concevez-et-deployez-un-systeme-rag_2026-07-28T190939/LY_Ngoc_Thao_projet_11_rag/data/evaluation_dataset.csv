@@ -1,0 +1,11 @@
+question,expected_answer
+Je cherche un concert à Versailles,Le système doit recommander un ou plusieurs événements musicaux présents dans les données.
+Quels événements pour enfants sont disponibles ?,Le système doit proposer des activités destinées aux enfants ou aux familles.
+Y a-t-il des expositions actuellement à Versailles ?,Le système doit lister les expositions en cours ou à venir.
+Je cherche une activité culturelle gratuite,Le système doit proposer des événements gratuits lorsqu'ils sont disponibles.
+Quels événements sont prévus ce week-end ?,Le système doit présenter les événements programmés le week-end.
+Je suis intéressé par le théâtre,Le système doit recommander des spectacles de théâtre ou des représentations scéniques.
+Quels événements liés à la musique classique sont proposés ?,Le système doit présenter les concerts ou événements de musique classique.
+Je cherche une activité pour un adolescent,"Le système doit recommander des ateliers, spectacles ou activités adaptés aux adolescents."
+Y a-t-il des conférences à Versailles ?,"Le système doit présenter les conférences, colloques ou rencontres présents dans les données."
+Quels événements culturels sont prévus en juillet ?,Le système doit lister les événements dont les dates se situent en juillet.

@@ -1,0 +1,194 @@
+id: workflow_vins_reel
+namespace: projet10.vins
+
+description: |
+  Pipeline Kestra pour BottleNeck : vérification des fichiers,
+  ingestion, nettoyage, dédoublonnage, fusion ERP/Web, calcul du chiffre
+  d'affaires, détection des vins premium par z-score et tests qualité après les étapes clés.
+
+triggers:
+  - id: execution_mensuelle
+    type: io.kestra.plugin.core.trigger.Schedule
+    cron: "0 9 15 * *"
+
+tasks:
+  - id: verifier_fichiers_sources
+    type: io.kestra.plugin.scripts.python.Script
+    containerImage: python:3.11-slim
+    namespaceFiles:
+      enabled: true
+    beforeCommands:
+      - pip install pandas openpyxl duckdb
+    script: |
+      exec(open("scripts/00_check_inputs.py", encoding="utf-8").read())
+
+  - id: ingestion_normalisation
+    type: io.kestra.plugin.scripts.python.Script
+    containerImage: python:3.11-slim
+    namespaceFiles:
+      enabled: true
+    beforeCommands:
+      - pip install pandas openpyxl duckdb
+    outputFiles:
+      - data/work/erp_normalise.csv
+      - data/work/liaison_normalise.csv
+      - data/work/web_normalise.csv
+    script: |
+      exec(open("scripts/01_ingestion_normalisation.py", encoding="utf-8").read())
+
+  - id: nettoyage_dedoublonnage_erp
+    type: io.kestra.plugin.scripts.python.Script
+    containerImage: python:3.11-slim
+    namespaceFiles:
+      enabled: true
+    inputFiles:
+      data/work/erp_normalise.csv: "{{ outputs.ingestion_normalisation.outputFiles['data/work/erp_normalise.csv'] }}"
+    beforeCommands:
+      - pip install pandas openpyxl duckdb
+    outputFiles:
+      - data/work/erp_clean.csv
+    script: |
+      exec(open("scripts/02_clean_erp.py", encoding="utf-8").read())
+
+  - id: nettoyage_dedoublonnage_liaison
+    type: io.kestra.plugin.scripts.python.Script
+    containerImage: python:3.11-slim
+    namespaceFiles:
+      enabled: true
+    inputFiles:
+      data/work/liaison_normalise.csv: "{{ outputs.ingestion_normalisation.outputFiles['data/work/liaison_normalise.csv'] }}"
+    beforeCommands:
+      - pip install pandas openpyxl duckdb
+    outputFiles:
+      - data/work/liaison_clean.csv
+    script: |
+      exec(open("scripts/03_clean_liaison.py", encoding="utf-8").read())
+
+  - id: nettoyage_dedoublonnage_web
+    type: io.kestra.plugin.scripts.python.Script
+    containerImage: python:3.11-slim
+    namespaceFiles:
+      enabled: true
+    inputFiles:
+      data/work/web_normalise.csv: "{{ outputs.ingestion_normalisation.outputFiles['data/work/web_normalise.csv'] }}"
+    beforeCommands:
+      - pip install pandas openpyxl duckdb
+    outputFiles:
+      - data/work/web_clean.csv
+    script: |
+      exec(open("scripts/04_clean_web.py", encoding="utf-8").read())
+
+  - id: fusion_systemes
+    type: io.kestra.plugin.scripts.python.Script
+    containerImage: python:3.11-slim
+    namespaceFiles:
+      enabled: true
+    inputFiles:
+      data/work/erp_clean.csv: "{{ outputs.nettoyage_dedoublonnage_erp.outputFiles['data/work/erp_clean.csv'] }}"
+      data/work/liaison_clean.csv: "{{ outputs.nettoyage_dedoublonnage_liaison.outputFiles['data/work/liaison_clean.csv'] }}"
+      data/work/web_clean.csv: "{{ outputs.nettoyage_dedoublonnage_web.outputFiles['data/work/web_clean.csv'] }}"
+    beforeCommands:
+      - pip install pandas openpyxl duckdb
+    outputFiles:
+      - data/work/donnees_fusionnees_sans_ca.csv
+    script: |
+      exec(open("scripts/05_fusion_systemes.py", encoding="utf-8").read())
+
+  - id: test_coherence_jointure
+    type: io.kestra.plugin.scripts.python.Script
+    containerImage: python:3.11-slim
+    namespaceFiles:
+      enabled: true
+    inputFiles:
+      data/work/donnees_fusionnees.csv: "{{ outputs.fusion_systemes.outputFiles['data/work/donnees_fusionnees_sans_ca.csv'] }}"
+    beforeCommands:
+      - pip install pandas openpyxl duckdb
+    script: |
+      exec(open("tests/test_coherence_jointure.py", encoding="utf-8").read())
+
+  - id: calcul_chiffre_affaires
+    type: io.kestra.plugin.scripts.python.Script
+    containerImage: python:3.11-slim
+    namespaceFiles:
+      enabled: true
+    inputFiles:
+      data/work/donnees_fusionnees_sans_ca.csv: "{{ outputs.fusion_systemes.outputFiles['data/work/donnees_fusionnees_sans_ca.csv'] }}"
+    beforeCommands:
+      - pip install pandas openpyxl duckdb
+    outputFiles:
+      - data/work/ca_produit.csv
+    script: |
+      exec(open("scripts/06_calcul_ca.py", encoding="utf-8").read())
+
+  - id: calcul_zscore_exports
+    type: io.kestra.plugin.scripts.python.Script
+    containerImage: python:3.11-slim
+    namespaceFiles:
+      enabled: true
+    inputFiles:
+      data/work/ca_produit.csv: "{{ outputs.calcul_chiffre_affaires.outputFiles['data/work/ca_produit.csv'] }}"
+    beforeCommands:
+      - pip install pandas openpyxl duckdb
+    outputFiles:
+      - data/output/donnees_fusionnees.csv
+      - data/output/vins_premium.csv
+      - data/output/vins_ordinaires.csv
+      - data/output/rapport_ca.xlsx
+    script: |
+      exec(open("scripts/07_zscore_exports.py", encoding="utf-8").read())
+
+  - id: test_absence_doublons
+    type: io.kestra.plugin.scripts.python.Script
+    containerImage: python:3.11-slim
+    namespaceFiles:
+      enabled: true
+    inputFiles:
+      data/work/donnees_fusionnees.csv: "{{ outputs.calcul_zscore_exports.outputFiles['data/output/donnees_fusionnees.csv'] }}"
+    beforeCommands:
+      - pip install pandas openpyxl duckdb
+    script: |
+      exec(open("tests/test_absence_doublons.py", encoding="utf-8").read())
+
+  - id: test_valeurs_manquantes
+    type: io.kestra.plugin.scripts.python.Script
+    containerImage: python:3.11-slim
+    namespaceFiles:
+      enabled: true
+    inputFiles:
+      data/work/donnees_fusionnees.csv: "{{ outputs.calcul_zscore_exports.outputFiles['data/output/donnees_fusionnees.csv'] }}"
+    beforeCommands:
+      - pip install pandas openpyxl duckdb
+    script: |
+      exec(open("tests/test_valeurs_manquantes.py", encoding="utf-8").read())
+
+  - id: test_coherence_ca
+    type: io.kestra.plugin.scripts.python.Script
+    containerImage: python:3.11-slim
+    namespaceFiles:
+      enabled: true
+    inputFiles:
+      data/work/donnees_fusionnees.csv: "{{ outputs.calcul_zscore_exports.outputFiles['data/output/donnees_fusionnees.csv'] }}"
+      data/output/rapport_ca.xlsx: "{{ outputs.calcul_zscore_exports.outputFiles['data/output/rapport_ca.xlsx'] }}"
+    beforeCommands:
+      - pip install pandas openpyxl duckdb
+    script: |
+      exec(open("tests/test_coherence_ca.py", encoding="utf-8").read())
+
+  - id: test_classification_vins
+    type: io.kestra.plugin.scripts.python.Script
+    containerImage: python:3.11-slim
+    namespaceFiles:
+      enabled: true
+    inputFiles:
+      data/work/donnees_fusionnees.csv: "{{ outputs.calcul_zscore_exports.outputFiles['data/output/donnees_fusionnees.csv'] }}"
+      data/work/vins_premium.csv: "{{ outputs.calcul_zscore_exports.outputFiles['data/output/vins_premium.csv'] }}"
+      data/work/vins_ordinaires.csv: "{{ outputs.calcul_zscore_exports.outputFiles['data/output/vins_ordinaires.csv'] }}"
+    beforeCommands:
+      - pip install pandas openpyxl duckdb
+    script: |
+      exec(open("tests/test_classification_vins.py", encoding="utf-8").read())
+
+errors:
+  - id: erreur_pipeline
+    type: io.kestra.plugin.core.log.Log
+    message: "Le pipeline a échoué : une étape de traitement ou un test qualité est en erreur. Les exports ne doivent pas être utilisés."

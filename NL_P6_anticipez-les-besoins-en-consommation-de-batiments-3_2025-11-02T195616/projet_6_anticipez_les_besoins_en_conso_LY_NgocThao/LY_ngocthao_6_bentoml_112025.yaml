@@ -1,0 +1,27 @@
+service: "service:EnergyPredictionService"   # chemin.module:NomClasseService
+labels:
+  owner: "thao"
+  project: "energy-prediction"
+  stage: "production"
+include:
+  - "service.py"
+  - "*.pkl"
+  - "requirements.txt"
+  - "bentoml.yml"
+python:
+  packages:
+    - bentoml
+    - pandas
+    - numpy
+    - scikit-learn
+    - pydantic
+    - traceback2
+models:
+  - "energy_predictor:latest"
+docker:
+  distro: debian
+  python_version: "3.10"
+  system_packages:
+    - curl
+    - libgomp1
+  setup_script: ""
