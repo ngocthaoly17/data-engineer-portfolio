@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Test Energy Predictor</title>
+</head>
+<body>
+  <h1>Prédiction de consommation énergétique</h1>
+
+  <form id="predictForm">
+    <label>PropertyGFATotal: <input type="number" id="PropertyGFATotal" value="3"></label><br>
+    <label>NumberofFloors: <input type="number" id="NumberofFloors" value="3"></label><br>
+    <label>NumberofBuildings: <input type="number" id="NumberofBuildings" value="1"></label><br>
+    <label>YearBuilt: <input type="number" id="YearBuilt" value="1"></label><br>
+    <label>YearsENERGYSTARCertified: <input type="number" id="YearsENERGYSTARCertified" value="1"></label><br><br>
+    <button type="submit">Prédire</button>
+  </form>
+
+  <h2>Résultat :</h2>
+  <pre id="result"></pre>
+
+  <script>
+    const form = document.getElementById('predictForm');
+    const resultEl = document.getElementById('result');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Construire le JSON à envoyer
+      const data = {
+        PropertyGFATotal: parseFloat(document.getElementById('PropertyGFATotal').value),
+        NumberofFloors: parseFloat(document.getElementById('NumberofFloors').value),
+        NumberofBuildings: parseFloat(document.getElementById('NumberofBuildings').value),
+        YearBuilt: parseFloat(document.getElementById('YearBuilt').value),
+        YearsENERGYSTARCertified: parseFloat(document.getElementById('YearsENERGYSTARCertified').value)
+      };
+
+      try {
+        const response = await fetch('http://localhost:3000/predict', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+          throw new Error(`Erreur: ${response.status}`);
+        }
+
+        const result = await response.json();
+        resultEl.textContent = JSON.stringify(result, null, 2);
+
+      } catch (err) {
+        resultEl.textContent = err;
+      }
+    });
+  </script>
+</body>
+</html>
