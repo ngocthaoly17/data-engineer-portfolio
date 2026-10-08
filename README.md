@@ -16,7 +16,6 @@ J'ai travaillé sur des environnements manipulant d'importants volumes de donné
 - Data Quality
 - pipelines de données
 - SQL et bases de données
-- traitement distribué
 - architectures event-driven
 - visualisation et exploitation des données
 
